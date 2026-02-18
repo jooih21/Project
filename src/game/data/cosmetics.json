@@ -1,0 +1,5 @@
+﻿[
+  { "id": "orange", "name": "Marmalade", "unlockStars": 0 },
+  { "id": "sky", "name": "Blueberry", "unlockStars": 4 },
+  { "id": "mint", "name": "Mint Cream", "unlockStars": 8 }
+]

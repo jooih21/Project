@@ -1,0 +1,959 @@
+[
+    {
+        "id":  "living-cup-1",
+        "spriteKey":  "obj-cup",
+        "mass":  0.74,
+        "scoreValue":  106,
+        "stability":  1.37,
+        "room":  "living",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "living-cup-2",
+        "spriteKey":  "obj-cup",
+        "mass":  0.71,
+        "scoreValue":  113,
+        "stability":  1.58,
+        "room":  "living",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "living-cup-3",
+        "spriteKey":  "obj-cup",
+        "mass":  0.81,
+        "scoreValue":  121,
+        "stability":  1.53,
+        "room":  "living",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "living-cup-4",
+        "spriteKey":  "obj-cup",
+        "mass":  0.73,
+        "scoreValue":  117,
+        "stability":  1.41,
+        "room":  "living",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "living-cup-5",
+        "spriteKey":  "obj-cup",
+        "mass":  0.72,
+        "scoreValue":  121,
+        "stability":  1.51,
+        "room":  "living",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "living-cup-6",
+        "spriteKey":  "obj-cup",
+        "mass":  0.73,
+        "scoreValue":  107,
+        "stability":  1.25,
+        "room":  "living",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "living-cup-7",
+        "spriteKey":  "obj-cup",
+        "mass":  0.77,
+        "scoreValue":  104,
+        "stability":  1.28,
+        "room":  "living",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "living-cup-8",
+        "spriteKey":  "obj-cup",
+        "mass":  0.8,
+        "scoreValue":  111,
+        "stability":  1.4,
+        "room":  "living",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "living-cup-9",
+        "spriteKey":  "obj-cup",
+        "mass":  0.73,
+        "scoreValue":  104,
+        "stability":  1.28,
+        "room":  "living",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "living-cup-10",
+        "spriteKey":  "obj-cup",
+        "mass":  0.73,
+        "scoreValue":  105,
+        "stability":  1.43,
+        "room":  "living",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "living-box-1",
+        "spriteKey":  "obj-box",
+        "mass":  1.22,
+        "scoreValue":  82,
+        "stability":  2.1,
+        "room":  "living",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "living-box-2",
+        "spriteKey":  "obj-box",
+        "mass":  1.13,
+        "scoreValue":  87,
+        "stability":  2.22,
+        "room":  "living",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "living-box-3",
+        "spriteKey":  "obj-box",
+        "mass":  1.17,
+        "scoreValue":  90,
+        "stability":  2.14,
+        "room":  "living",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "living-box-4",
+        "spriteKey":  "obj-box",
+        "mass":  1.24,
+        "scoreValue":  98,
+        "stability":  2.02,
+        "room":  "living",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "living-box-5",
+        "spriteKey":  "obj-box",
+        "mass":  1.16,
+        "scoreValue":  87,
+        "stability":  2.18,
+        "room":  "living",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "living-box-6",
+        "spriteKey":  "obj-box",
+        "mass":  1.2,
+        "scoreValue":  78,
+        "stability":  2.08,
+        "room":  "living",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "living-box-7",
+        "spriteKey":  "obj-box",
+        "mass":  1.14,
+        "scoreValue":  97,
+        "stability":  2.2,
+        "room":  "living",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "living-box-8",
+        "spriteKey":  "obj-box",
+        "mass":  1.26,
+        "scoreValue":  87,
+        "stability":  2.22,
+        "room":  "living",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "living-plant-1",
+        "spriteKey":  "obj-plant",
+        "mass":  1.09,
+        "scoreValue":  151,
+        "stability":  2.64,
+        "room":  "living",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "living-plant-2",
+        "spriteKey":  "obj-plant",
+        "mass":  1.14,
+        "scoreValue":  141,
+        "stability":  2.68,
+        "room":  "living",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "living-plant-3",
+        "spriteKey":  "obj-plant",
+        "mass":  1.09,
+        "scoreValue":  158,
+        "stability":  2.49,
+        "room":  "living",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "living-plant-4",
+        "spriteKey":  "obj-plant",
+        "mass":  1.14,
+        "scoreValue":  157,
+        "stability":  2.4,
+        "room":  "living",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "kitchen-cup-1",
+        "spriteKey":  "obj-cup",
+        "mass":  0.67,
+        "scoreValue":  134,
+        "stability":  1.43,
+        "room":  "kitchen",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kitchen-cup-2",
+        "spriteKey":  "obj-cup",
+        "mass":  0.63,
+        "scoreValue":  125,
+        "stability":  1.43,
+        "room":  "kitchen",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kitchen-cup-3",
+        "spriteKey":  "obj-cup",
+        "mass":  0.76,
+        "scoreValue":  122,
+        "stability":  1.34,
+        "room":  "kitchen",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kitchen-cup-4",
+        "spriteKey":  "obj-cup",
+        "mass":  0.65,
+        "scoreValue":  132,
+        "stability":  1.46,
+        "room":  "kitchen",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kitchen-cup-5",
+        "spriteKey":  "obj-cup",
+        "mass":  0.73,
+        "scoreValue":  121,
+        "stability":  1.24,
+        "room":  "kitchen",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kitchen-cup-6",
+        "spriteKey":  "obj-cup",
+        "mass":  0.7,
+        "scoreValue":  115,
+        "stability":  1.28,
+        "room":  "kitchen",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kitchen-cup-7",
+        "spriteKey":  "obj-cup",
+        "mass":  0.65,
+        "scoreValue":  110,
+        "stability":  1.23,
+        "room":  "kitchen",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kitchen-cup-8",
+        "spriteKey":  "obj-cup",
+        "mass":  0.73,
+        "scoreValue":  129,
+        "stability":  1.46,
+        "room":  "kitchen",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kitchen-cup-9",
+        "spriteKey":  "obj-cup",
+        "mass":  0.67,
+        "scoreValue":  130,
+        "stability":  1.26,
+        "room":  "kitchen",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kitchen-box-1",
+        "spriteKey":  "obj-box",
+        "mass":  1.29,
+        "scoreValue":  97,
+        "stability":  2.21,
+        "room":  "kitchen",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kitchen-box-2",
+        "spriteKey":  "obj-box",
+        "mass":  1.36,
+        "scoreValue":  96,
+        "stability":  2.38,
+        "room":  "kitchen",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kitchen-box-3",
+        "spriteKey":  "obj-box",
+        "mass":  1.26,
+        "scoreValue":  93,
+        "stability":  2.26,
+        "room":  "kitchen",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kitchen-box-4",
+        "spriteKey":  "obj-box",
+        "mass":  1.36,
+        "scoreValue":  105,
+        "stability":  2.08,
+        "room":  "kitchen",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kitchen-box-5",
+        "spriteKey":  "obj-box",
+        "mass":  1.23,
+        "scoreValue":  103,
+        "stability":  2.12,
+        "room":  "kitchen",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kitchen-box-6",
+        "spriteKey":  "obj-box",
+        "mass":  1.37,
+        "scoreValue":  103,
+        "stability":  2.11,
+        "room":  "kitchen",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kitchen-plant-1",
+        "spriteKey":  "obj-plant",
+        "mass":  1.16,
+        "scoreValue":  144,
+        "stability":  2.39,
+        "room":  "kitchen",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "kitchen-plant-2",
+        "spriteKey":  "obj-plant",
+        "mass":  1.17,
+        "scoreValue":  164,
+        "stability":  2.45,
+        "room":  "kitchen",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "kitchen-plant-3",
+        "spriteKey":  "obj-plant",
+        "mass":  1.08,
+        "scoreValue":  157,
+        "stability":  2.39,
+        "room":  "kitchen",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "bedroom-cup-1",
+        "spriteKey":  "obj-cup",
+        "mass":  0.88,
+        "scoreValue":  140,
+        "stability":  1.64,
+        "room":  "bedroom",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "bedroom-cup-2",
+        "spriteKey":  "obj-cup",
+        "mass":  0.8,
+        "scoreValue":  124,
+        "stability":  1.39,
+        "room":  "bedroom",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "bedroom-cup-3",
+        "spriteKey":  "obj-cup",
+        "mass":  0.73,
+        "scoreValue":  133,
+        "stability":  1.6,
+        "room":  "bedroom",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "bedroom-cup-4",
+        "spriteKey":  "obj-cup",
+        "mass":  0.82,
+        "scoreValue":  116,
+        "stability":  1.45,
+        "room":  "bedroom",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "bedroom-cup-5",
+        "spriteKey":  "obj-cup",
+        "mass":  0.8,
+        "scoreValue":  117,
+        "stability":  1.6,
+        "room":  "bedroom",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "bedroom-box-1",
+        "spriteKey":  "obj-box",
+        "mass":  1.09,
+        "scoreValue":  83,
+        "stability":  2.2,
+        "room":  "bedroom",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "bedroom-box-2",
+        "spriteKey":  "obj-box",
+        "mass":  1.1,
+        "scoreValue":  97,
+        "stability":  2,
+        "room":  "bedroom",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "bedroom-box-3",
+        "spriteKey":  "obj-box",
+        "mass":  1.17,
+        "scoreValue":  101,
+        "stability":  2.12,
+        "room":  "bedroom",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "bedroom-box-4",
+        "spriteKey":  "obj-box",
+        "mass":  1.12,
+        "scoreValue":  89,
+        "stability":  1.85,
+        "room":  "bedroom",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "bedroom-box-5",
+        "spriteKey":  "obj-box",
+        "mass":  1.17,
+        "scoreValue":  84,
+        "stability":  2.04,
+        "room":  "bedroom",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "bedroom-plant-1",
+        "spriteKey":  "obj-plant",
+        "mass":  0.94,
+        "scoreValue":  152,
+        "stability":  2.46,
+        "room":  "bedroom",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "bedroom-plant-2",
+        "spriteKey":  "obj-plant",
+        "mass":  1.01,
+        "scoreValue":  161,
+        "stability":  2.58,
+        "room":  "bedroom",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "bedroom-table-1",
+        "spriteKey":  "obj-table",
+        "mass":  2.2,
+        "scoreValue":  243,
+        "stability":  4,
+        "room":  "bedroom",
+        "tags":  [
+                     "furniture"
+                 ]
+    },
+    {
+        "id":  "bedroom-table-2",
+        "spriteKey":  "obj-table",
+        "mass":  2.13,
+        "scoreValue":  232,
+        "stability":  4.27,
+        "room":  "bedroom",
+        "tags":  [
+                     "furniture"
+                 ]
+    },
+    {
+        "id":  "bathroom-cup-1",
+        "spriteKey":  "obj-cup",
+        "mass":  0.61,
+        "scoreValue":  132,
+        "stability":  1.23,
+        "room":  "bathroom",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "bathroom-cup-2",
+        "spriteKey":  "obj-cup",
+        "mass":  0.64,
+        "scoreValue":  136,
+        "stability":  1.28,
+        "room":  "bathroom",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "bathroom-cup-3",
+        "spriteKey":  "obj-cup",
+        "mass":  0.67,
+        "scoreValue":  140,
+        "stability":  1.33,
+        "room":  "bathroom",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "bathroom-cup-4",
+        "spriteKey":  "obj-cup",
+        "mass":  0.7,
+        "scoreValue":  144,
+        "stability":  1.38,
+        "room":  "bathroom",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "bathroom-cup-5",
+        "spriteKey":  "obj-cup",
+        "mass":  0.73,
+        "scoreValue":  148,
+        "stability":  1.43,
+        "room":  "bathroom",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "bathroom-cup-6",
+        "spriteKey":  "obj-cup",
+        "mass":  0.76,
+        "scoreValue":  152,
+        "stability":  1.48,
+        "room":  "bathroom",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "bathroom-box-1",
+        "spriteKey":  "obj-box",
+        "mass":  1.05,
+        "scoreValue":  92,
+        "stability":  1.98,
+        "room":  "bathroom",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "bathroom-box-2",
+        "spriteKey":  "obj-box",
+        "mass":  1.1,
+        "scoreValue":  96,
+        "stability":  2.06,
+        "room":  "bathroom",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "bathroom-box-3",
+        "spriteKey":  "obj-box",
+        "mass":  1.15,
+        "scoreValue":  100,
+        "stability":  2.14,
+        "room":  "bathroom",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "bathroom-box-4",
+        "spriteKey":  "obj-box",
+        "mass":  1.2,
+        "scoreValue":  104,
+        "stability":  2.22,
+        "room":  "bathroom",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "bathroom-plant-1",
+        "spriteKey":  "obj-plant",
+        "mass":  1,
+        "scoreValue":  151,
+        "stability":  2.31,
+        "room":  "bathroom",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "bathroom-plant-2",
+        "spriteKey":  "obj-plant",
+        "mass":  1.04,
+        "scoreValue":  157,
+        "stability":  2.4,
+        "room":  "bathroom",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "bathroom-plant-3",
+        "spriteKey":  "obj-plant",
+        "mass":  1.08,
+        "scoreValue":  163,
+        "stability":  2.49,
+        "room":  "bathroom",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "bathroom-furniture-1",
+        "spriteKey":  "obj-table",
+        "mass":  1.97,
+        "scoreValue":  224,
+        "stability":  3.7,
+        "room":  "bathroom",
+        "tags":  [
+                     "furniture"
+                 ]
+    },
+    {
+        "id":  "bathroom-furniture-2",
+        "spriteKey":  "obj-table",
+        "mass":  2.09,
+        "scoreValue":  238,
+        "stability":  3.9,
+        "room":  "bathroom",
+        "tags":  [
+                     "furniture"
+                 ]
+    },
+    {
+        "id":  "kids-cup-1",
+        "spriteKey":  "obj-cup",
+        "mass":  0.65,
+        "scoreValue":  123,
+        "stability":  1.27,
+        "room":  "kids",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kids-cup-2",
+        "spriteKey":  "obj-cup",
+        "mass":  0.68,
+        "scoreValue":  128,
+        "stability":  1.32,
+        "room":  "kids",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kids-cup-3",
+        "spriteKey":  "obj-cup",
+        "mass":  0.71,
+        "scoreValue":  133,
+        "stability":  1.37,
+        "room":  "kids",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kids-cup-4",
+        "spriteKey":  "obj-cup",
+        "mass":  0.74,
+        "scoreValue":  138,
+        "stability":  1.42,
+        "room":  "kids",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kids-cup-5",
+        "spriteKey":  "obj-cup",
+        "mass":  0.77,
+        "scoreValue":  143,
+        "stability":  1.47,
+        "room":  "kids",
+        "tags":  [
+                     "fragile"
+                 ]
+    },
+    {
+        "id":  "kids-box-1",
+        "spriteKey":  "obj-box",
+        "mass":  0.93,
+        "scoreValue":  99,
+        "stability":  1.78,
+        "room":  "kids",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kids-box-2",
+        "spriteKey":  "obj-box",
+        "mass":  0.98,
+        "scoreValue":  103,
+        "stability":  1.86,
+        "room":  "kids",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kids-box-3",
+        "spriteKey":  "obj-box",
+        "mass":  1.03,
+        "scoreValue":  107,
+        "stability":  1.94,
+        "room":  "kids",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kids-box-4",
+        "spriteKey":  "obj-box",
+        "mass":  1.08,
+        "scoreValue":  111,
+        "stability":  2.02,
+        "room":  "kids",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kids-box-5",
+        "spriteKey":  "obj-box",
+        "mass":  1.13,
+        "scoreValue":  115,
+        "stability":  2.1,
+        "room":  "kids",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kids-box-6",
+        "spriteKey":  "obj-box",
+        "mass":  1.18,
+        "scoreValue":  119,
+        "stability":  2.18,
+        "room":  "kids",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kids-box-7",
+        "spriteKey":  "obj-box",
+        "mass":  1.23,
+        "scoreValue":  123,
+        "stability":  2.26,
+        "room":  "kids",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kids-box-8",
+        "spriteKey":  "obj-box",
+        "mass":  1.28,
+        "scoreValue":  127,
+        "stability":  2.34,
+        "room":  "kids",
+        "tags":  [
+                     "box"
+                 ]
+    },
+    {
+        "id":  "kids-plant-1",
+        "spriteKey":  "obj-plant",
+        "mass":  0.95,
+        "scoreValue":  143,
+        "stability":  2.17,
+        "room":  "kids",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "kids-plant-2",
+        "spriteKey":  "obj-plant",
+        "mass":  1,
+        "scoreValue":  151,
+        "stability":  2.29,
+        "room":  "kids",
+        "tags":  [
+                     "plant"
+                 ]
+    },
+    {
+        "id":  "kids-furniture-1",
+        "spriteKey":  "obj-table",
+        "mass":  1.83,
+        "scoreValue":  204,
+        "stability":  3.4,
+        "room":  "kids",
+        "tags":  [
+                     "furniture"
+                 ]
+    },
+    {
+        "id":  "kids-furniture-2",
+        "spriteKey":  "obj-table",
+        "mass":  1.96,
+        "scoreValue":  220,
+        "stability":  3.6,
+        "room":  "kids",
+        "tags":  [
+                     "furniture"
+                 ]
+    },
+    {
+        "id":  "kids-furniture-3",
+        "spriteKey":  "obj-table",
+        "mass":  2.09,
+        "scoreValue":  236,
+        "stability":  3.8,
+        "room":  "kids",
+        "tags":  [
+                     "furniture"
+                 ]
+    }
+]

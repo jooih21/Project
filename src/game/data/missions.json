@@ -1,0 +1,62 @@
+﻿[
+    {
+        "id":  "m-score-1000",
+        "conditionType":  "score",
+        "targetValue":  1000,
+        "starReward":  1
+    },
+    {
+        "id":  "m-score-2500",
+        "conditionType":  "score",
+        "targetValue":  2500,
+        "starReward":  1
+    },
+    {
+        "id":  "m-score-4500",
+        "conditionType":  "score",
+        "targetValue":  4500,
+        "starReward":  1
+    },
+    {
+        "id":  "m-score-7000",
+        "conditionType":  "score",
+        "targetValue":  7000,
+        "starReward":  2
+    },
+    {
+        "id":  "m-destroy-10",
+        "conditionType":  "destroyedCount",
+        "targetValue":  10,
+        "starReward":  1
+    },
+    {
+        "id":  "m-destroy-18",
+        "conditionType":  "destroyedCount",
+        "targetValue":  18,
+        "starReward":  1
+    },
+    {
+        "id":  "m-destroy-28",
+        "conditionType":  "destroyedCount",
+        "targetValue":  28,
+        "starReward":  2
+    },
+    {
+        "id":  "m-combo-4",
+        "conditionType":  "bestCombo",
+        "targetValue":  4,
+        "starReward":  1
+    },
+    {
+        "id":  "m-combo-7",
+        "conditionType":  "bestCombo",
+        "targetValue":  7,
+        "starReward":  1
+    },
+    {
+        "id":  "m-combo-11",
+        "conditionType":  "bestCombo",
+        "targetValue":  11,
+        "starReward":  2
+    }
+]

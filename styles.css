@@ -1,0 +1,77 @@
+﻿:root {
+  --bg-top: #f7eec8;
+  --bg-bottom: #f6b9b1;
+  --panel: #fff7eb;
+  --ink: #3a2b25;
+  --accent: #ff8a64;
+  --accent-2: #68b4ff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+}
+
+.app-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px;
+}
+
+.title-bar {
+  background: var(--panel);
+  border: 3px solid #4c3d37;
+  border-radius: 14px;
+  padding: 10px 14px;
+  box-shadow: 0 5px 0 #d48775;
+}
+
+.title-bar h1 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 0.4px;
+}
+
+.title-bar p {
+  margin: 6px 0 0;
+  font-size: 14px;
+}
+
+#game-root {
+  margin-top: 12px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 4px solid #4c3d37;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fffef9;
+  box-shadow: 0 8px 0 #d48775;
+}
+
+#game-root canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+footer {
+  margin-top: 12px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  background: #fff9ef;
+  border: 2px dashed #7d665e;
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .title-bar h1 { font-size: 20px; }
+  .title-bar p { font-size: 12px; }
+  footer { font-size: 12px; }
+}
