@@ -44,8 +44,40 @@ export class BreakableObject extends Phaser.Physics.Arcade.Image {
     this.isSpecial = false;
     this.specialMultiplier = 1;
     this.specialBadge = null;
+
+    this.materialKind = this.getMaterialKind();
+    this.telegraphProfile = this.getTelegraphProfile(this.materialKind);
+    this.wobbleStrength = this.telegraphProfile.wobbleStrength;
+    this.wobbleSpeed = this.telegraphProfile.wobbleSpeed;
+    this.wobbleScalePulse = this.telegraphProfile.wobbleScalePulse;
+    this.telegraphTint = this.telegraphProfile.tint;
   }
 
+
+  getMaterialKind() {
+    const tags = this.def.tags ?? [];
+    if (tags.includes("fragile")) return "fragile";
+    if (tags.includes("furniture")) return "furniture";
+    if (tags.includes("plant")) return "plant";
+    if (tags.includes("box")) return "box";
+    return "default";
+  }
+
+  getTelegraphProfile(kind) {
+    if (kind === "fragile") {
+      return { wobbleStrength: 14, wobbleSpeed: 24, wobbleScalePulse: 0.06, tint: 0xe9f4ff };
+    }
+    if (kind === "furniture") {
+      return { wobbleStrength: 6, wobbleSpeed: 40, wobbleScalePulse: 0.03, tint: 0xffddb8 };
+    }
+    if (kind === "plant") {
+      return { wobbleStrength: 10, wobbleSpeed: 30, wobbleScalePulse: 0.05, tint: 0xd8f8d8 };
+    }
+    if (kind === "box") {
+      return { wobbleStrength: 8, wobbleSpeed: 34, wobbleScalePulse: 0.04, tint: 0xf2e1c7 };
+    }
+    return { wobbleStrength: 9, wobbleSpeed: 32, wobbleScalePulse: 0.04, tint: 0xfff2b2 };
+  }
   getTextureVariants() {
     const tags = this.def.tags ?? [];
     const room = this.def.room ?? "living";
@@ -176,10 +208,15 @@ export class BreakableObject extends Phaser.Physics.Arcade.Image {
     const crackThreshold = this.def.stability * 0.62;
     const tipThreshold = this.state === "cracked" ? this.def.stability * 0.72 : this.def.stability;
 
-    this.wobbleUntil = now + 320;
+    const tipRatio = Phaser.Math.Clamp(power / Math.max(1, tipThreshold), 0, 1);
+    const wobbleExtra = Math.floor(tipRatio * 180);
+    this.wobbleUntil = now + 320 + wobbleExtra;
+    this.wobbleStrength = this.telegraphProfile.wobbleStrength * (1 + tipRatio * 0.45);
+    this.wobbleScalePulse = this.telegraphProfile.wobbleScalePulse * (1 + tipRatio * 0.35);
+
     if (this.state !== "cracked") {
       this.state = "wobble";
-      this.setTint(0xfff2b2);
+      this.setTint(this.telegraphTint);
     }
 
     if (power >= tipThreshold) {
@@ -219,7 +256,7 @@ export class BreakableObject extends Phaser.Physics.Arcade.Image {
 
     if (power >= crackThreshold && this.state !== "cracked") {
       this.state = "cracked";
-      this.setTint(0xffe7bf);
+      this.setTint(this.telegraphTint);
       this.crackOverlay.setVisible(true);
       this.scene.tweens.add({
         targets: this.crackOverlay,
@@ -264,12 +301,18 @@ export class BreakableObject extends Phaser.Physics.Arcade.Image {
     if (this.state === "gone") return;
 
     if (this.state === "wobble") {
-      const wobblePower = Phaser.Math.Clamp((this.wobbleUntil - now) / 320, 0, 1);
-      this.setAngle(Math.sin(now / 32) * 9 * wobblePower);
+      const wobblePower = Phaser.Math.Clamp((this.wobbleUntil - now) / 500, 0, 1);
+      const wobbleAngle = Math.sin(now / this.wobbleSpeed) * this.wobbleStrength * wobblePower;
+      this.setAngle(wobbleAngle);
+
+      const wobblePulse = 1 + Math.abs(Math.sin(now / (this.wobbleSpeed * 0.8))) * this.wobbleScalePulse * wobblePower;
+      this.setScale(this.baseScale * wobblePulse);
+
       if (now > this.wobbleUntil) {
         this.state = "upright";
         this.clearTint();
         this.setAngle(0);
+        this.setScale(this.baseScale);
       }
     }
 
@@ -283,9 +326,15 @@ export class BreakableObject extends Phaser.Physics.Arcade.Image {
     if (this.state === "upright" && this.body?.velocity?.length() < 12) {
       if (this.def.room === "kids") {
         this.setAngle(Math.sin(now / 95 + this.roomAnimPhase) * 1.8);
+        this.setScale(this.baseScale * (1 + Math.sin(now / 160 + this.roomAnimPhase) * 0.01));
       } else if (this.def.room === "bathroom") {
         this.setAngle(Math.sin(now / 125 + this.roomAnimPhase) * 1.1);
+        this.setScale(this.baseScale * (1 + Math.sin(now / 190 + this.roomAnimPhase) * 0.008));
       }
+    }
+
+    if (this.state === "upright") {
+      this.setScale(this.baseScale);
     }
 
     if (this.state === "tipped" && !this.fadeStarted && now >= this.tippedAt + this.fadeDelayMs) {
