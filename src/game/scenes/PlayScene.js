@@ -1137,61 +1137,128 @@ export class PlayScene extends Phaser.Scene {
       scale: { start: particleProfile.scaleStart, end: particleProfile.scaleEnd },
       lifespan: particleProfile.lifespan,
       quantity: obj.isSpecial ? particleProfile.quantity + 3 : particleProfile.quantity,
-      tint: obj.isSpecial ? [0xffd54f, 0xffffff] : particleProfile.tint
+      tint: obj.isSpecial ? [0xffd54f, 0xffffff] : particleProfile.tint,
+      angle: { min: 200, max: 340 }
     });
     if (this.uiCamera) this.uiCamera.ignore(particles);
-    this.time.delayedCall(220, () => particles.destroy());
+    this.time.delayedCall(Math.max(220, particleProfile.lifespan + 40), () => particles.destroy());
+
+    this.spawnMaterialBurst(obj, particleProfile, obj.isSpecial);
   }
 
   getChaosParticleProfile(obj) {
     const tags = obj?.def?.tags ?? [];
     if (tags.includes("fragile")) {
       return {
+        materialKind: "fragile",
         textureKey: "fx-crack-small",
-        speedMin: 40,
-        speedMax: 140,
-        scaleStart: 0.45,
+        burstTextureKey: "fx-crack-large",
+        speedMin: 46,
+        speedMax: 155,
+        scaleStart: 0.48,
         scaleEnd: 0.05,
-        lifespan: 280,
-        quantity: 8,
-        tint: [0xd8f1ff, 0xffffff, 0xb8d7ff]
+        lifespan: 290,
+        quantity: 9,
+        tint: [0xd8f1ff, 0xffffff, 0xb8d7ff],
+        burstTint: [0xe8f7ff, 0xcce9ff],
+        burstAlpha: 0.34
       };
     }
     if (tags.includes("furniture")) {
       return {
+        materialKind: "furniture",
         textureKey: "obj-crate",
+        burstTextureKey: "obj-box-tipped",
         speedMin: 18,
-        speedMax: 84,
-        scaleStart: 0.2,
+        speedMax: 86,
+        scaleStart: 0.22,
         scaleEnd: 0.03,
-        lifespan: 340,
+        lifespan: 350,
         quantity: 7,
-        tint: [0xd2a577, 0xb98256, 0xefd4b4]
+        tint: [0xd2a577, 0xb98256, 0xefd4b4],
+        burstTint: [0x9f6f46, 0xdab389],
+        burstAlpha: 0.26
       };
     }
     if (tags.includes("plant")) {
       return {
+        materialKind: "plant",
         textureKey: "obj-plant",
-        speedMin: 22,
-        speedMax: 96,
-        scaleStart: 0.25,
+        burstTextureKey: "obj-succulent",
+        speedMin: 24,
+        speedMax: 100,
+        scaleStart: 0.27,
         scaleEnd: 0.02,
         lifespan: 300,
         quantity: 7,
-        tint: [0x76c07c, 0x4f9f63, 0xa9ddb0]
+        tint: [0x76c07c, 0x4f9f63, 0xa9ddb0],
+        burstTint: [0x58a86a, 0x9bd79d],
+        burstAlpha: 0.28
+      };
+    }
+    if (tags.includes("box")) {
+      return {
+        materialKind: "box",
+        textureKey: "obj-box",
+        burstTextureKey: "obj-crate",
+        speedMin: 20,
+        speedMax: 92,
+        scaleStart: 0.24,
+        scaleEnd: 0.03,
+        lifespan: 280,
+        quantity: 7,
+        tint: [0xd6ba94, 0xb48761, 0xead6b5],
+        burstTint: [0xa7774f, 0xd0ac88],
+        burstAlpha: 0.24
       };
     }
     return {
+      materialKind: "default",
       textureKey: "obj-cup",
+      burstTextureKey: "obj-cup-tipped",
       speedMin: 20,
       speedMax: 90,
       scaleStart: 0.45,
       scaleEnd: 0.05,
       lifespan: 250,
       quantity: 6,
-      tint: [0xfff2b2, 0xffffff]
+      tint: [0xfff2b2, 0xffffff],
+      burstTint: [0xffe8c9, 0xfff8e2],
+      burstAlpha: 0.22
     };
   }
+
+  spawnMaterialBurst(obj, profile, isSpecial = false) {
+    const burst = this.add.particles(obj.x, obj.y, profile.burstTextureKey, {
+      speed: { min: profile.speedMin * 0.45, max: profile.speedMax * 0.8 },
+      scale: { start: profile.scaleStart * 0.42, end: 0.01 },
+      lifespan: Math.floor(profile.lifespan * 0.75),
+      quantity: isSpecial ? 6 : 4,
+      tint: isSpecial ? [0xffdf73, 0xffffff] : profile.burstTint,
+      alpha: { start: profile.burstAlpha, end: 0 },
+      angle: { min: 0, max: 360 }
+    });
+
+    if (this.uiCamera) this.uiCamera.ignore(burst);
+    this.time.delayedCall(Math.floor(profile.lifespan * 0.8), () => burst.destroy());
+
+    if (this.roomTransitionOverlay) {
+      this.tweens.killTweensOf(this.roomTransitionOverlay);
+      const flashColor =
+        profile.materialKind === "fragile" ? 0xd9efff :
+        profile.materialKind === "furniture" ? 0xffd7b2 :
+        profile.materialKind === "plant" ? 0xc9f4cd :
+        profile.materialKind === "box" ? 0xe9d1b2 : 0xffefcf;
+      this.roomTransitionOverlay.setFillStyle(flashColor, 0.06).setAlpha(0.06);
+      this.tweens.add({
+        targets: this.roomTransitionOverlay,
+        alpha: 0,
+        duration: 140,
+        ease: "Sine.Out"
+      });
+    }
+  }
+
   finishRun() {
     this.finished = true;
     this.soundFx.stopBgm();
