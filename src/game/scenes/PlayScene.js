@@ -28,6 +28,7 @@ export class PlayScene extends Phaser.Scene {
     this.drawMap();
     this.setupFixedGimmicks();
     this.setupRoomLighting();
+    this.setupCinematicOverlay();
     this.soundFx = new SoundSystem(this, this.saveData.settings);
     this.soundFx.playStartBgm();
 
@@ -118,7 +119,7 @@ export class PlayScene extends Phaser.Scene {
   }
 
   setupUiCamera() {
-    const hudObjects = [...this.hud.getDisplayObjects(), this.tutorialText, this.roundTimerBg, this.roundTimerText, this.comboRushText, this.hitFlashOverlay, this.roomTraitBg, this.roomTraitText];
+    const hudObjects = [...this.hud.getDisplayObjects(), this.tutorialText, this.roundTimerBg, this.roundTimerText, this.comboRushText, this.hitFlashOverlay, this.vignetteOverlay, this.comboTintOverlay, this.impactPulseCircle, this.roomTraitBg, this.roomTraitText];
     this.uiCamera = this.cameras.add(0, 0, this.scale.width, this.scale.height, false, "ui");
     this.uiCamera.setScroll(0, 0);
     this.uiCamera.setZoom(1);
@@ -215,6 +216,62 @@ export class PlayScene extends Phaser.Scene {
       alpha: 0,
       duration: 1180,
       ease: "Sine.Out"
+    });
+
+    this.pulseComboTint(comboCount);
+  }
+  setupCinematicOverlay() {
+    this.vignetteOverlay = this.add.rectangle(640, 360, this.scale.width, this.scale.height, 0x1a0f0b, 0)
+      .setScrollFactor(0)
+      .setDepth(2468)
+      .setVisible(true);
+
+    this.comboTintOverlay = this.add.rectangle(640, 360, this.scale.width, this.scale.height, 0xff7d5f, 0)
+      .setScrollFactor(0)
+      .setDepth(2469)
+      .setVisible(true);
+
+    this.impactPulseCircle = this.add.circle(640, 360, 30, 0xffffff, 0)
+      .setScrollFactor(0)
+      .setDepth(2472)
+      .setVisible(true);
+  }
+
+  updateCinematicOverlay(comboMult) {
+    if (!this.vignetteOverlay) return;
+    const target = Phaser.Math.Clamp(0.06 + comboMult * 0.01, 0.06, 0.22);
+    const current = this.vignetteOverlay.alpha ?? 0;
+    this.vignetteOverlay.setAlpha(Phaser.Math.Linear(current, target, 0.09));
+  }
+
+  pulseComboTint(comboCount) {
+    if (!this.comboTintOverlay) return;
+    const intensity = Phaser.Math.Clamp(0.08 + comboCount * 0.008, 0.08, 0.34);
+    this.tweens.killTweensOf(this.comboTintOverlay);
+    this.comboTintOverlay.setAlpha(intensity);
+    this.tweens.add({
+      targets: this.comboTintOverlay,
+      alpha: 0,
+      duration: 260,
+      ease: "Quad.Out"
+    });
+  }
+
+  triggerImpactPulse(worldX, worldY, strength = 1) {
+    if (!this.impactPulseCircle) return;
+    const sx = Phaser.Math.Clamp(worldX - this.cameras.main.scrollX, 40, this.scale.width - 40);
+    const sy = Phaser.Math.Clamp(worldY - this.cameras.main.scrollY, 40, this.scale.height - 40);
+    const radius = Phaser.Math.Linear(70, 180, Phaser.Math.Clamp(strength, 0, 1));
+    const alpha = Phaser.Math.Linear(0.08, 0.22, Phaser.Math.Clamp(strength, 0, 1));
+
+    this.tweens.killTweensOf(this.impactPulseCircle);
+    this.impactPulseCircle.setPosition(sx, sy).setRadius(30).setFillStyle(0xfff4d0, alpha);
+    this.tweens.add({
+      targets: this.impactPulseCircle,
+      radius,
+      alpha: 0,
+      duration: 220,
+      ease: "Quad.Out"
     });
   }
   setupHitFlashDisplay() {
@@ -394,7 +451,8 @@ export class PlayScene extends Phaser.Scene {
     });
 
     const ring = this.add.circle(cat.x, cat.y, 34, 0xffd36b, 0.22).setDepth(2400);
-    if (this.uiCamera) this.uiCamera.ignore(ring);
+    const ring2 = this.add.circle(cat.x, cat.y, 20, 0xff8d52, 0.2).setDepth(2399);
+    if (this.uiCamera) this.uiCamera.ignore([ring, ring2]);
     this.tweens.add({
       targets: ring,
       radius: 190,
@@ -403,7 +461,16 @@ export class PlayScene extends Phaser.Scene {
       ease: "Quad.Out",
       onComplete: () => ring.destroy()
     });
+    this.tweens.add({
+      targets: ring2,
+      radius: 220,
+      alpha: 0,
+      duration: 260,
+      ease: "Sine.Out",
+      onComplete: () => ring2.destroy()
+    });
 
+    this.triggerImpactPulse(cat.x, cat.y, 1);
     this.cameras.main.shake(170, 0.0082);
   }
   assignSpecialObjects() {
@@ -898,6 +965,8 @@ export class PlayScene extends Phaser.Scene {
       roomId: this.currentRoomId
     });
 
+    this.updateCinematicOverlay(comboMult);
+
     this.updateTutorial(now);
 
     if (!this.finished && now >= this.roundEndAt) {
@@ -1004,6 +1073,7 @@ export class PlayScene extends Phaser.Scene {
     const tag = obj.isSpecial ? " [SPECIAL]" : "";
     this.hud.showGain(`+${res.gained}${tag} (${res.multiplier.toFixed(1)}x)`);
     this.showComboRush(comboCount, res.multiplier);
+    this.triggerImpactPulse(obj.x, obj.y, Phaser.Math.Clamp(comboCount / 14, 0.25, 1));
 
     const shakePower = this.currentRoomId === "bedroom" ? 0.002 : 0.0035;
     this.cameras.main.shake(70, shakePower);
@@ -1052,6 +1122,7 @@ export class PlayScene extends Phaser.Scene {
     });
   }
 }
+
 
 
 

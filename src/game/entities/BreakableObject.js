@@ -27,6 +27,13 @@ export class BreakableObject extends Phaser.Physics.Arcade.Image {
     this.shadow = scene.add.image(x, y + 10, "shadow-soft");
     this.shadow.setScale(0.5, 0.28).setAlpha(0.2).setDepth(80 + y);
 
+    this.highlight = scene.add.image(x, y - 6, "shadow-soft");
+    this.highlight
+      .setScale(0.34, 0.16)
+      .setAlpha(0.12)
+      .setTint(0xffffff)
+      .setDepth(170 + y);
+
     this.crackOverlay = scene.add.image(x, y, this.getCrackOverlayKey());
     this.crackOverlay.setVisible(false).setAlpha(0.82).setDepth(160 + y);
 
@@ -237,7 +244,7 @@ export class BreakableObject extends Phaser.Physics.Arcade.Image {
     this.fadeStarted = true;
 
     this.scene.tweens.add({
-      targets: [this, this.shadow],
+      targets: [this, this.shadow, this.highlight],
       alpha: 0,
       duration: this.fadeDurationMs,
       ease: "Sine.InOut",
@@ -247,6 +254,7 @@ export class BreakableObject extends Phaser.Physics.Arcade.Image {
         this.setActive(false);
         this.body.enable = false;
         this.shadow.setVisible(false);
+        this.highlight.setVisible(false);
         this.crackOverlay.setVisible(false);
       }
     });
@@ -291,10 +299,12 @@ export class BreakableObject extends Phaser.Physics.Arcade.Image {
 
     const tippedRatio = this.state === "tipped" ? 1 : 0;
     this.shadow.setPosition(this.x, this.y + 10);
+    this.highlight.setPosition(this.x + 2, this.y - 7);
     this.shadow.setDepth(80 + this.y);
     this.shadow.setScale(0.5 + tippedRatio * 0.12, 0.28 + tippedRatio * 0.08);
     if (!this.fadeStarted) {
       this.shadow.setAlpha(0.2 - tippedRatio * 0.06);
+      this.highlight.setAlpha(0.12 - tippedRatio * 0.04 + Math.sin(now / 140 + this.roomAnimPhase) * 0.02);
     }
 
     if (this.state !== "cracked") {
@@ -307,6 +317,7 @@ export class BreakableObject extends Phaser.Physics.Arcade.Image {
   destroy(fromScene) {
     this.specialBadge?.destroy();
     this.shadow?.destroy();
+    this.highlight?.destroy();
     this.crackOverlay?.destroy();
     super.destroy(fromScene);
   }

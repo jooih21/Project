@@ -2,6 +2,17 @@ export class Hud {
   constructor(scene) {
     this.scene = scene;
 
+    this.panelBg = this.scene.add.rectangle(206, 116, 350, 210, 0x2a1e1a, 0.22)
+      .setOrigin(0, 0)
+      .setScrollFactor(0)
+      .setDepth(1988)
+      .setStrokeStyle(2, 0xffd9b8, 0.55);
+
+    this.panelGlow = this.scene.add.rectangle(210, 120, 342, 202, 0xfff1de, 0.08)
+      .setOrigin(0, 0)
+      .setScrollFactor(0)
+      .setDepth(1989);
+
     this.scoreText = this.createHudText(42, 18, "Score: 0");
     this.comboText = this.createHudText(42, 50, "Combo: x1.0");
     this.timeText = this.createHudText(42, 82, "Time: 60");
@@ -21,6 +32,8 @@ export class Hud {
 
   getDisplayObjects() {
     return [
+      this.panelBg,
+      this.panelGlow,
       this.scoreText,
       this.comboText,
       this.timeText,
@@ -46,6 +59,18 @@ export class Hud {
     this.timeText.setText(`Time: ${Math.ceil(timeLeft)}`);
     this.superText.setText(`Super Dash: ${superDashCharges}`);
     this.roomText.setText(`Room: ${roomId}`);
+
+    const pressure = Phaser.Math.Clamp(comboMult / 5, 0, 1);
+    const bgAlpha = Phaser.Math.Linear(0.22, 0.36, pressure);
+    const glowAlpha = Phaser.Math.Linear(0.08, 0.2, pressure);
+    this.panelBg.setFillStyle(0x2a1e1a, bgAlpha);
+    this.panelGlow.setFillStyle(0xfff1de, glowAlpha);
+
+    if (comboMult >= 2.5) {
+      this.comboText.setColor("#ff7d64");
+    } else {
+      this.comboText.setColor("#2d211c");
+    }
   }
 
   showGain(msg) {
