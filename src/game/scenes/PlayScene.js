@@ -239,9 +239,14 @@ export class PlayScene extends Phaser.Scene {
 
   updateCinematicOverlay(comboMult) {
     if (!this.vignetteOverlay) return;
-    const target = Phaser.Math.Clamp(0.06 + comboMult * 0.01, 0.06, 0.22);
+    const roomFx = this.currentRoomPostFx ?? { vignetteBase: 0.08, tintColor: 0xff7d5f, tintBoost: 1 };
+    const target = Phaser.Math.Clamp(roomFx.vignetteBase + comboMult * 0.012, 0.05, 0.28);
     const current = this.vignetteOverlay.alpha ?? 0;
     this.vignetteOverlay.setAlpha(Phaser.Math.Linear(current, target, 0.09));
+
+    if (this.comboTintOverlay) {
+      this.comboTintOverlay.setFillStyle(roomFx.tintColor, this.comboTintOverlay.alpha * roomFx.tintBoost);
+    }
   }
 
   pulseComboTint(comboCount) {
@@ -746,37 +751,45 @@ export class PlayScene extends Phaser.Scene {
     this.roomLightBloom = this.add.ellipse(this.worldW / 2, this.worldH / 2, 540, 260, 0xfff2cf)
       .setDepth(1690)
       .setAlpha(0.22);
+    this.currentRoomPostFx = { vignetteBase: 0.1, tintColor: 0xffa47a, tintBoost: 1 };
     this.lastLitRoomId = "";
     this.updateRoomLighting("living");
   }
+
   updateRoomLighting(roomId) {
     if (!this.roomToneOverlay || !this.roomLightBloom) return;
     if (roomId === this.lastLitRoomId) return;
     this.lastLitRoomId = roomId;
+
     if (roomId === "kitchen") {
       this.roomToneOverlay.setFillStyle(0xa9ddff).setAlpha(0.14);
       this.roomLightBloom.setPosition(1080, 250).setFillStyle(0xdff3ff).setAlpha(0.25);
+      this.currentRoomPostFx = { vignetteBase: 0.07, tintColor: 0x8fd9ff, tintBoost: 0.86 };
       return;
     }
     if (roomId === "bedroom") {
       this.roomToneOverlay.setFillStyle(0xf0b6dd).setAlpha(0.14);
       this.roomLightBloom.setPosition(1210, 545).setFillStyle(0xffe1ef).setAlpha(0.24);
+      this.currentRoomPostFx = { vignetteBase: 0.1, tintColor: 0xff88c9, tintBoost: 0.92 };
       return;
     }
     if (roomId === "bathroom") {
       this.roomToneOverlay.setFillStyle(0x9fdef5).setAlpha(0.15);
       this.roomLightBloom.setPosition(400, 825).setFillStyle(0xd8f3ff).setAlpha(0.26);
+      this.currentRoomPostFx = { vignetteBase: 0.08, tintColor: 0x9cdfff, tintBoost: 0.88 };
       return;
     }
     if (roomId === "kids") {
       this.roomToneOverlay.setFillStyle(0xffbfe8).setAlpha(0.15);
       this.roomLightBloom.setPosition(1210, 865).setFillStyle(0xffe2f3).setAlpha(0.26);
+      this.currentRoomPostFx = { vignetteBase: 0.09, tintColor: 0xff9fd2, tintBoost: 1.12 };
       return;
     }
+
     this.roomToneOverlay.setFillStyle(0xffd19a).setAlpha(0.13);
     this.roomLightBloom.setPosition(400, 375).setFillStyle(0xffedc2).setAlpha(0.27);
+    this.currentRoomPostFx = { vignetteBase: 0.1, tintColor: 0xffa97a, tintBoost: 1 };
   }
-
   drawRoomPattern(roomId, room) {
     if (roomId === "kitchen" || roomId === "bathroom") {
       const tileW = roomId === "bathroom" ? 40 : 48;
@@ -1078,17 +1091,67 @@ export class PlayScene extends Phaser.Scene {
     const shakePower = this.currentRoomId === "bedroom" ? 0.002 : 0.0035;
     this.cameras.main.shake(70, shakePower);
 
-    const particles = this.add.particles(obj.x, obj.y, "obj-cup", {
-      speed: { min: 20, max: 90 },
-      scale: { start: 0.45, end: 0.05 },
-      lifespan: 250,
-      quantity: obj.isSpecial ? 10 : 6,
-      tint: obj.isSpecial ? [0xffd54f, 0xffffff] : [0xfff2b2, 0xffffff]
+    const particleProfile = this.getChaosParticleProfile(obj);
+    const particles = this.add.particles(obj.x, obj.y, particleProfile.textureKey, {
+      speed: { min: particleProfile.speedMin, max: particleProfile.speedMax },
+      scale: { start: particleProfile.scaleStart, end: particleProfile.scaleEnd },
+      lifespan: particleProfile.lifespan,
+      quantity: obj.isSpecial ? particleProfile.quantity + 3 : particleProfile.quantity,
+      tint: obj.isSpecial ? [0xffd54f, 0xffffff] : particleProfile.tint
     });
     if (this.uiCamera) this.uiCamera.ignore(particles);
     this.time.delayedCall(220, () => particles.destroy());
   }
 
+  getChaosParticleProfile(obj) {
+    const tags = obj?.def?.tags ?? [];
+    if (tags.includes("fragile")) {
+      return {
+        textureKey: "fx-crack-small",
+        speedMin: 40,
+        speedMax: 140,
+        scaleStart: 0.45,
+        scaleEnd: 0.05,
+        lifespan: 280,
+        quantity: 8,
+        tint: [0xd8f1ff, 0xffffff, 0xb8d7ff]
+      };
+    }
+    if (tags.includes("furniture")) {
+      return {
+        textureKey: "obj-crate",
+        speedMin: 18,
+        speedMax: 84,
+        scaleStart: 0.2,
+        scaleEnd: 0.03,
+        lifespan: 340,
+        quantity: 7,
+        tint: [0xd2a577, 0xb98256, 0xefd4b4]
+      };
+    }
+    if (tags.includes("plant")) {
+      return {
+        textureKey: "obj-plant",
+        speedMin: 22,
+        speedMax: 96,
+        scaleStart: 0.25,
+        scaleEnd: 0.02,
+        lifespan: 300,
+        quantity: 7,
+        tint: [0x76c07c, 0x4f9f63, 0xa9ddb0]
+      };
+    }
+    return {
+      textureKey: "obj-cup",
+      speedMin: 20,
+      speedMax: 90,
+      scaleStart: 0.45,
+      scaleEnd: 0.05,
+      lifespan: 250,
+      quantity: 6,
+      tint: [0xfff2b2, 0xffffff]
+    };
+  }
   finishRun() {
     this.finished = true;
     this.soundFx.stopBgm();
@@ -1122,6 +1185,12 @@ export class PlayScene extends Phaser.Scene {
     });
   }
 }
+
+
+
+
+
+
 
 
 

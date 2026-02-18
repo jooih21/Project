@@ -52,6 +52,8 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
     this.jumpDurationMs = 310;
     this.jumpHeight = 21;
     this.jumpImpactMultiplier = 1;
+    this.landSquashUntil = 0;
+    this.landSquashDurationMs = 150;
 
     this.baseDisplayOriginX = this.displayOriginX;
     this.baseDisplayOriginY = this.displayOriginY;
@@ -293,8 +295,11 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
     }
 
     const airborne = this.isAirborne(time);
-    if (this.wasAirborne && !airborne && typeof this.scene.onCatLand === "function") {
-      this.scene.onCatLand(this);
+    if (this.wasAirborne && !airborne) {
+      this.landSquashUntil = time + this.landSquashDurationMs;
+      if (typeof this.scene.onCatLand === "function") {
+        this.scene.onCatLand(this);
+      }
     }
     this.wasAirborne = airborne;
 
@@ -383,11 +388,24 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
     const lift = this.getJumpLift(time);
     const liftRatio = lift / this.jumpHeight;
 
-    this.setDisplayOrigin(this.baseDisplayOriginX, this.baseDisplayOriginY + lift);
-    this.setScale(this.baseScaleX * (1 + liftRatio * 0.06), this.baseScaleY * (1 - liftRatio * 0.08));
+    const velocityLen = this.body.velocity.length();
+    const moveStretch = Phaser.Math.Clamp(velocityLen / 420, 0, 1) * 0.08;
 
-    const shadowScaleX = Phaser.Math.Linear(0.78, 0.56, liftRatio);
-    const shadowScaleY = Phaser.Math.Linear(0.42, 0.28, liftRatio);
+    let landT = 0;
+    if (time < this.landSquashUntil) {
+      landT = 1 - (this.landSquashUntil - time) / this.landSquashDurationMs;
+      landT = Phaser.Math.Clamp(landT, 0, 1);
+    }
+    const landSquash = Math.sin(landT * Math.PI) * 0.14;
+
+    this.setDisplayOrigin(this.baseDisplayOriginX, this.baseDisplayOriginY + lift);
+    this.setScale(
+      this.baseScaleX * (1 + liftRatio * 0.08 + moveStretch + landSquash),
+      this.baseScaleY * (1 - liftRatio * 0.11 - moveStretch * 0.7 - landSquash * 0.85)
+    );
+
+    const shadowScaleX = Phaser.Math.Linear(0.78, 0.56, liftRatio) + landSquash * 0.2;
+    const shadowScaleY = Phaser.Math.Linear(0.42, 0.28, liftRatio) - landSquash * 0.1;
     const shadowAlpha = Phaser.Math.Linear(0.3, 0.15, liftRatio);
     this.shadow.setScale(shadowScaleX, shadowScaleY).setAlpha(shadowAlpha);
   }
@@ -439,6 +457,9 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
     return true;
   }
 }
+
+
+
 
 
 
