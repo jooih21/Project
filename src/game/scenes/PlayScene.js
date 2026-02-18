@@ -119,7 +119,7 @@ export class PlayScene extends Phaser.Scene {
   }
 
   setupUiCamera() {
-    const hudObjects = [...this.hud.getDisplayObjects(), this.tutorialText, this.roundTimerBg, this.roundTimerText, this.comboRushText, this.hitFlashOverlay, this.vignetteOverlay, this.comboTintOverlay, this.impactPulseCircle, this.roomTraitBg, this.roomTraitText];
+    const hudObjects = [...this.hud.getDisplayObjects(), this.tutorialText, this.roundTimerBg, this.roundTimerText, this.comboRushText, this.hitFlashOverlay, this.vignetteOverlay, this.comboTintOverlay, this.roomTransitionOverlay, this.impactPulseCircle, this.roomTraitBg, this.roomTraitText];
     this.uiCamera = this.cameras.add(0, 0, this.scale.width, this.scale.height, false, "ui");
     this.uiCamera.setScroll(0, 0);
     this.uiCamera.setZoom(1);
@@ -231,6 +231,11 @@ export class PlayScene extends Phaser.Scene {
       .setDepth(2469)
       .setVisible(true);
 
+    
+    this.roomTransitionOverlay = this.add.rectangle(640, 360, this.scale.width, this.scale.height, 0xffffff, 0)
+      .setScrollFactor(0)
+      .setDepth(2471)
+      .setVisible(true);
     this.impactPulseCircle = this.add.circle(640, 360, 30, 0xffffff, 0)
       .setScrollFactor(0)
       .setDepth(2472)
@@ -277,6 +282,27 @@ export class PlayScene extends Phaser.Scene {
       alpha: 0,
       duration: 220,
       ease: "Quad.Out"
+    });
+  }
+
+  triggerRoomTransitionFx(roomId) {
+    if (!this.roomTransitionOverlay) return;
+    const colorByRoom = {
+      living: 0xffd8a2,
+      kitchen: 0xcaf0ff,
+      bedroom: 0xffc6e6,
+      bathroom: 0xc8efff,
+      kids: 0xffb5dd
+    };
+
+    const color = colorByRoom[roomId] ?? 0xffffff;
+    this.tweens.killTweensOf(this.roomTransitionOverlay);
+    this.roomTransitionOverlay.setFillStyle(color, 0.11).setAlpha(0.11);
+    this.tweens.add({
+      targets: this.roomTransitionOverlay,
+      alpha: 0,
+      duration: 260,
+      ease: "Sine.Out"
     });
   }
   setupHitFlashDisplay() {
@@ -422,6 +448,7 @@ export class PlayScene extends Phaser.Scene {
     this.time.delayedCall(180, () => dust.destroy());
 
     this.cameras.main.shake(45, 0.0022);
+    this.soundFx?.playLand(speed);
   }
   onCatDashStart(cat, dashMult) {
     const radius = 190;
@@ -477,6 +504,7 @@ export class PlayScene extends Phaser.Scene {
 
     this.triggerImpactPulse(cat.x, cat.y, 1);
     this.cameras.main.shake(170, 0.0082);
+    this.soundFx?.playDash();
   }
   assignSpecialObjects() {
     const candidates = [...this.objects].filter((o) => o.state === "upright");
@@ -765,30 +793,40 @@ export class PlayScene extends Phaser.Scene {
       this.roomToneOverlay.setFillStyle(0xa9ddff).setAlpha(0.14);
       this.roomLightBloom.setPosition(1080, 250).setFillStyle(0xdff3ff).setAlpha(0.25);
       this.currentRoomPostFx = { vignetteBase: 0.07, tintColor: 0x8fd9ff, tintBoost: 0.86 };
+      this.triggerRoomTransitionFx("kitchen");
+      this.soundFx?.playRoomShift("kitchen");
       return;
     }
     if (roomId === "bedroom") {
       this.roomToneOverlay.setFillStyle(0xf0b6dd).setAlpha(0.14);
       this.roomLightBloom.setPosition(1210, 545).setFillStyle(0xffe1ef).setAlpha(0.24);
       this.currentRoomPostFx = { vignetteBase: 0.1, tintColor: 0xff88c9, tintBoost: 0.92 };
+      this.triggerRoomTransitionFx("bedroom");
+      this.soundFx?.playRoomShift("bedroom");
       return;
     }
     if (roomId === "bathroom") {
       this.roomToneOverlay.setFillStyle(0x9fdef5).setAlpha(0.15);
       this.roomLightBloom.setPosition(400, 825).setFillStyle(0xd8f3ff).setAlpha(0.26);
       this.currentRoomPostFx = { vignetteBase: 0.08, tintColor: 0x9cdfff, tintBoost: 0.88 };
+      this.triggerRoomTransitionFx("bathroom");
+      this.soundFx?.playRoomShift("bathroom");
       return;
     }
     if (roomId === "kids") {
       this.roomToneOverlay.setFillStyle(0xffbfe8).setAlpha(0.15);
       this.roomLightBloom.setPosition(1210, 865).setFillStyle(0xffe2f3).setAlpha(0.26);
       this.currentRoomPostFx = { vignetteBase: 0.09, tintColor: 0xff9fd2, tintBoost: 1.12 };
+      this.triggerRoomTransitionFx("kids");
+      this.soundFx?.playRoomShift("kids");
       return;
     }
 
     this.roomToneOverlay.setFillStyle(0xffd19a).setAlpha(0.13);
     this.roomLightBloom.setPosition(400, 375).setFillStyle(0xffedc2).setAlpha(0.27);
     this.currentRoomPostFx = { vignetteBase: 0.1, tintColor: 0xffa97a, tintBoost: 1 };
+    this.triggerRoomTransitionFx("living");
+    this.soundFx?.playRoomShift("living");
   }
   drawRoomPattern(roomId, room) {
     if (roomId === "kitchen" || roomId === "bathroom") {
@@ -1080,7 +1118,9 @@ export class PlayScene extends Phaser.Scene {
       }
     }
     const comboCount = this.comboSystem.combo;
-    this.soundFx.playHit();
+    const tags = obj?.def?.tags ?? [];
+    const material = tags.includes("fragile") ? "fragile" : tags.includes("furniture") ? "furniture" : tags.includes("plant") ? "plant" : tags.includes("box") ? "box" : "default";
+    this.soundFx.playHitByMaterial(material);
     this.soundFx.playCombo(Math.floor(res.multiplier * 10));
 
     const tag = obj.isSpecial ? " [SPECIAL]" : "";
