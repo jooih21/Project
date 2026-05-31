@@ -1,4 +1,4 @@
-# Chaos Kitty House (Web MVP)
+# Chaos Kitty House (Web MVP)  
 
 A browser game prototype built with Phaser 3 (CDN) and modular JavaScript.
 
@@ -62,7 +62,7 @@ assets/
 
 - Object physics profiles by type/tag
 - Cat state animation polish: idle/run/pounce/dash/super-dash
-- Special objects (`¡Ú`) with score bonus and richer feedback
+- Special objects (`Â¡Ãš`) with score bonus and richer feedback
 - Super Dash system: +1 charge every combo tier (`6,12,...`)
 - Dash improvement:
   - Short dash-impact window boosts object tipping power
